@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace EcommerceDemo.commons
 {
-    abstract class BasePage
+    abstract internal class BasePage
     {
         private WebDriverWait? explicitWait;
 
@@ -665,6 +665,16 @@ namespace EcommerceDemo.commons
             OverrideGlobalTimeout(driver, shortTimeout);
             explicitWait.Until(ExpectedConditions.InvisibilityOfElementLocated(GetByLocator(locator)));
             OverrideGlobalTimeout(driver, longTimeout);
+        }
+
+        protected void SubmitElement(IWebDriver driver, string locator)
+        {
+            GetElement(driver, locator).Submit();
+        }
+
+        protected void SubmitElement(IWebDriver driver, string locator, params string[] dynamicValues)
+        {
+            GetElement(driver, GetDynamicXpath(locator, dynamicValues)).Submit();
         }
 
         protected void WaitForElementInvisible(IWebDriver driver, string locator, params string[] dynamicValues)
