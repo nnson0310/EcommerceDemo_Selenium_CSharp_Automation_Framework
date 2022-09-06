@@ -4,7 +4,7 @@
     {
         public enum BrowserName
         {
-            Firefox, Chrome, H_Chrome, H_Firefox, HtmlUnit, Edge, CocCoc, Safari
+            Firefox, Chrome, H_Chrome, H_Firefox, Edge, CocCoc, Safari
         }
 
         public enum Os
