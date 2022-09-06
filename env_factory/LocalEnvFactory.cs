@@ -38,10 +38,6 @@ namespace EcommerceDemo.env_factory
             {
                 driver = new HFirefoxDriverFactory().CreateDriver();
             }
-            else if (browser == Browser.HtmlUnit)
-            {
-                driver = new HtmlUnitDriverFactory().CreateDriver();
-            }
             else if (browser == Browser.CocCoc)
             {
                 driver = new CocCocDriverFactory().CreateDriver();

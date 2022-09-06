@@ -6,7 +6,7 @@ namespace EcommerceDemo.commons
 {
     internal class BaseTest
     {
-        private static IWebDriver? driver;
+        private static IWebDriver? driver = null!;
 
         protected IWebDriver GetBrowserDriver(
             string url,
@@ -34,7 +34,7 @@ namespace EcommerceDemo.commons
             return driver;
         }
 
-        public static IWebDriver GetWebDriver()
+        public static IWebDriver? GetWebDriver()
         {
             return driver;
         }
@@ -45,9 +45,7 @@ namespace EcommerceDemo.commons
             try
             {
                 string osName = Environment.OSVersion.ToString().ToLower();
-
-                string driverInstanceName = driver.ToString().ToLower();
-               
+                string? driverInstanceName = driver.ToString()!.ToLower();
 
                 if (driverInstanceName.Contains("chrome"))
                 {
@@ -58,13 +56,6 @@ namespace EcommerceDemo.commons
                     else
                     {
                         cmd = "pkill chromedriver";
-                    }
-                }
-                else if (driverInstanceName.Contains("internetexplorer"))
-                {
-                    if (osName.Contains("window"))
-                    {
-                        cmd = "taskkill /F /FI \"IMAGENAME eq IEDriverServer*\"";
                     }
                 }
                 else if (driverInstanceName.Contains("firefox"))
@@ -89,17 +80,6 @@ namespace EcommerceDemo.commons
                         cmd = "pkill msedgedriver";
                     }
                 }
-                else if (driverInstanceName.Contains("opera"))
-                {
-                    if (osName.Contains("window"))
-                    {
-                        cmd = "taskkill /F /FI \"IMAGENAME eq operadriver*\"";
-                    }
-                    else
-                    {
-                        cmd = "pkill operadriver";
-                    }
-                }
                 else if (driverInstanceName.Contains("safari"))
                 {
                     if (osName.Contains("mac"))
@@ -120,14 +100,21 @@ namespace EcommerceDemo.commons
             }
             finally
             {
+                Process process = new();
+
                 try
                 {
-                    Process process = Runtime.getRuntime().exec(cmd);
-                    process.waitFor();
+                    ProcessStartInfo processStartInfo = new("CMD.exe", "/C " + cmd);
+                    process.StartInfo = processStartInfo;
+                    process.Start();
+                    process.WaitForExit();
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.ToString());
+                } finally
+                {
+                    process.Close();
                 }
             }
         }
