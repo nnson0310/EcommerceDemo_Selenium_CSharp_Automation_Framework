@@ -6,7 +6,7 @@ namespace EcommerceDemo.commons
 {
     internal class BaseTest
     {
-        private static IWebDriver? driver = null!;
+        private static IWebDriver? driver;
 
         protected IWebDriver GetBrowserDriver(
             string url,
@@ -45,7 +45,7 @@ namespace EcommerceDemo.commons
             try
             {
                 string osName = Environment.OSVersion.ToString().ToLower();
-                string? driverInstanceName = driver.ToString()!.ToLower();
+                string driverInstanceName = driver!.ToString()!.ToLower();
 
                 if (driverInstanceName.Contains("chrome"))
                 {
@@ -112,7 +112,8 @@ namespace EcommerceDemo.commons
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.ToString());
-                } finally
+                }
+                finally
                 {
                     process.Close();
                 }
