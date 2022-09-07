@@ -5,7 +5,7 @@ namespace EcommerceDemo.custom_exceptions
     {
         public LocatorInvalidException(string? message) : base(message)
         {
-
+            
         }
     }
 }

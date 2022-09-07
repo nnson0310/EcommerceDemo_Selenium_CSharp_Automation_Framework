@@ -19,7 +19,7 @@ namespace EcommerceDemo.env_factory
             this.osVersion = osVersion;
         }
 
-        public IWebDriver InitBrowserDriver()
+        public IWebDriver InitDriver()
         {
             return driver;
         }

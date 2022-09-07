@@ -14,7 +14,7 @@ namespace EcommerceDemo.env_factory
             this.browserName = browserName;
         }
 
-        public IWebDriver InitBrowserDriver()
+        public IWebDriver InitDriver()
         {
             Browser browser = (Browser)Enum.Parse(typeof(Browser), browserName, true);
 
