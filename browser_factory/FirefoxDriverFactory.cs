@@ -1,9 +1,10 @@
-﻿using OpenQA.Selenium;
+﻿using EcommerceDemo.commons;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 
 namespace EcommerceDemo.browser_factory
 {
-    internal class FirefoxDriverFactory: IBrowserDriverFactory
+    internal class FirefoxDriverFactory : IBrowserDriverFactory
     {
         public IWebDriver CreateDriver()
         {
@@ -13,7 +14,9 @@ namespace EcommerceDemo.browser_factory
                 // disable all browser logs except fatal errors
                 LogLevel = FirefoxDriverLogLevel.Fatal
             };
-            
+
+            firefoxOptions.AddArguments(GlobalConstants.optionArguments);
+
             return new FirefoxDriver(firefoxOptions);
         }
     }

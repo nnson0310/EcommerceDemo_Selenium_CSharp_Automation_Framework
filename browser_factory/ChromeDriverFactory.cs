@@ -1,9 +1,10 @@
-﻿using OpenQA.Selenium;
+﻿using EcommerceDemo.commons;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 namespace EcommerceDemo.browser_factory
 {
-    internal class ChromeDriverFactory: IBrowserDriverFactory
+    internal class ChromeDriverFactory : IBrowserDriverFactory
     {
         public IWebDriver CreateDriver()
         {
@@ -11,6 +12,8 @@ namespace EcommerceDemo.browser_factory
             {
                 AcceptInsecureCertificates = true
             };
+
+            chromeOptions.AddArguments(GlobalConstants.optionArguments);
 
             return new ChromeDriver(chromeOptions);
         }
