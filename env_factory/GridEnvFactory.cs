@@ -20,7 +20,7 @@ namespace EcommerceDemo.env_factory
             this.port = port;
         }
 
-        public IWebDriver InitBrowserDriver()
+        public IWebDriver InitDriver()
         {
             throw new NotImplementedException();
         }
