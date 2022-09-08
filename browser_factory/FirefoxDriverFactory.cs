@@ -1,4 +1,5 @@
 ﻿using EcommerceDemo.commons;
+using EcommerceDemo.helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 
@@ -15,9 +16,9 @@ namespace EcommerceDemo.browser_factory
                 LogLevel = FirefoxDriverLogLevel.Fatal
             };
 
-            firefoxOptions.AddArguments(GlobalConstants.optionArguments);
+            firefoxOptions.AddArguments(MethodHelper.GetDriverOptionArguments());
 
-            return new FirefoxDriver("D:\\browser_driver\\", firefoxOptions);
+            return new FirefoxDriver(MethodHelper.GetBrowserDriverDir(), firefoxOptions);
         }
     }
 }

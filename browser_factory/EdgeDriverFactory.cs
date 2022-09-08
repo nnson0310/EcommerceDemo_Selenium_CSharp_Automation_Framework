@@ -1,9 +1,10 @@
-﻿using OpenQA.Selenium;
+﻿using EcommerceDemo.helpers;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Edge;
 
 namespace EcommerceDemo.browser_factory
 {
-    internal class EdgeDriverFactory: IBrowserDriverFactory
+    internal class EdgeDriverFactory : IBrowserDriverFactory
     {
         public IWebDriver CreateDriver()
         {
@@ -12,7 +13,7 @@ namespace EcommerceDemo.browser_factory
                 AcceptInsecureCertificates = true
             };
 
-            return new EdgeDriver(edgeOptions);
+            return new EdgeDriver(MethodHelper.GetBrowserDriverDir(), edgeOptions);
         }
     }
 }

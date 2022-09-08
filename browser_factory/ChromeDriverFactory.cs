@@ -1,4 +1,5 @@
 ﻿using EcommerceDemo.commons;
+using EcommerceDemo.helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -13,9 +14,9 @@ namespace EcommerceDemo.browser_factory
                 AcceptInsecureCertificates = true
             };
 
-            chromeOptions.AddArguments(GlobalConstants.optionArguments);
+            chromeOptions.AddArguments(MethodHelper.GetDriverOptionArguments());
 
-            return new ChromeDriver(chromeOptions);
+            return new ChromeDriver(MethodHelper.GetBrowserDriverDir(), chromeOptions);
         }
     }
 }
