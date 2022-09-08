@@ -24,5 +24,23 @@ namespace EcommerceDemo.helpers
         {
             return ConfigurationManager.AppSettings[paramName];
         }
+
+        public static IEnumerable<string> GetDriverOptionArguments()
+        {
+            yield return "--disable-gpu";
+            yield return "--disable-popup-blocking";
+            yield return "--disable-notifications";
+            yield return "--start-maximized";
+            yield return "--no-sandbox";
+            yield return "--dns-prefetch-disable";
+            yield return "--ignore-certificate-errors";
+            yield return "--disable-infobars";
+            yield return "--enable-automation";
+        }
+
+        public static string GetBrowserDriverDir()
+        {
+            return GetProjectRootDir() + "browser_drivers";
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EcommerceDemo.commons;
+using EcommerceDemo.helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 
@@ -13,9 +14,9 @@ namespace EcommerceDemo.browser_factory
                 AcceptInsecureCertificates = true
             };
             firefoxOptions.AddArgument("--headless");
-            firefoxOptions.AddArguments(GlobalConstants.optionArguments);
+            firefoxOptions.AddArguments(MethodHelper.GetDriverOptionArguments());
 
-            return new FirefoxDriver(firefoxOptions);
+            return new FirefoxDriver(MethodHelper.GetBrowserDriverDir(), firefoxOptions);
         }
     }
 }

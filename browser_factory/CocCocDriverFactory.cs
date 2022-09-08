@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using EcommerceDemo.helpers;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 namespace EcommerceDemo.browser_factory
@@ -17,10 +18,10 @@ namespace EcommerceDemo.browser_factory
             // because CocCoc is a 64-bit program so it will be always installed
             // in Program Files other than Program Files (x86) folder. If you install
             // it in another driver (ex: D:), specify the absolute path for it
-            chromeOptions.BinaryLocation = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) + 
+            chromeOptions.BinaryLocation = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles) +
                 "\\CocCoc\\Browser\\Application\\browser.exe";
 
-            return new ChromeDriver(chromeOptions);
+            return new ChromeDriver(MethodHelper.GetBrowserDriverDir(), chromeOptions);
         }
     }
 }
