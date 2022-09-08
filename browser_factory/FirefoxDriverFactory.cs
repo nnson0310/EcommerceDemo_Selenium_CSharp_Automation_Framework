@@ -17,7 +17,7 @@ namespace EcommerceDemo.browser_factory
 
             firefoxOptions.AddArguments(GlobalConstants.optionArguments);
 
-            return new FirefoxDriver(firefoxOptions);
+            return new FirefoxDriver("D:\\browser_driver\\", firefoxOptions);
         }
     }
 }

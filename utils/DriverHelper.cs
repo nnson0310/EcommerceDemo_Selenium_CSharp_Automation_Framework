@@ -1,8 +1,11 @@
 ﻿
+using AventStack.ExtentReports;
 using EcommerceDemo.commons;
 using EcommerceDemo.env_factory;
 using EcommerceDemo.extents;
 using EcommerceDemo.helpers;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using System.Diagnostics;
 
@@ -25,11 +28,12 @@ namespace EcommerceDemo.utils
             try
             {
                 driver = InitDriver();
-                ReportLog.Pass("Init browser driver successfully.");
-            } catch (Exception e)
+                ReportLog.Pass("Init browser driver = " + driver.ToString() + " successfully.");
+            }
+            catch (Exception e)
             {
                 Debug.WriteLine(e.ToString());
-                ReportLog.Fail("Fail to init browser driver.");
+                ReportLog.Fail("Failed to init browser driver.");
             }
             return driver;
         }
@@ -58,7 +62,57 @@ namespace EcommerceDemo.utils
             return driver;
         }
 
-        public void CloseBrowserAndKillProcess()
+        private MediaEntityModelProvider CaptureScreenshot(string testName)
+        {
+            var screenshot = ((ITakesScreenshot)driver!).GetScreenshot().AsBase64EncodedString;
+            return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, testName).Build();
+        }
+
+        public void GenerateReportAndCloseBrowser()
+        {
+            try
+            {
+                var status = TestContext.CurrentContext.Result.Outcome.Status;
+                var errorMessage = string.IsNullOrEmpty(TestContext.CurrentContext.Result.Message)
+                    ? ""
+                    : string.Format("<pre>{0)<pre>", TestContext.CurrentContext.Result.Message);
+                var stackTrace = string.IsNullOrEmpty(TestContext.CurrentContext.Result.StackTrace)
+                    ? ""
+                    : string.Format("<pre>{0)<pre>", TestContext.CurrentContext.Result.StackTrace);
+
+                switch (status)
+                {
+                    case TestStatus.Skipped:
+                        ReportLog.Pass("Test skipped");
+                        break;
+                    case TestStatus.Passed:
+                        ReportLog.Pass("Test passed");
+                        break;
+                    case TestStatus.Failed:
+                        ReportLog.Fail("Test failed");
+                        ReportLog.Fail(errorMessage);
+                        ReportLog.Fail(stackTrace);
+                        ReportLog.Fail("Attached screenshot", CaptureScreenshot(TestContext.CurrentContext.Test.Name));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+            }
+            finally
+            {
+                CloseBrowserAndKillProcess();
+            }
+        }
+
+        /// <summary>
+        /// Close browser and kill all process though cmd
+        /// Check os is "Windows" or "Mac" to run corresponding cli
+        /// </summary>
+        private void CloseBrowserAndKillProcess()
         {
             string cmd = "";
             try
@@ -107,7 +161,7 @@ namespace EcommerceDemo.utils
                     }
                 }
 
-                if (driver != null)
+                if (driver is not null)
                 {
                     driver.Manage().Cookies.DeleteAllCookies();
                     driver.Quit();

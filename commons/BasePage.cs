@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace EcommerceDemo.commons
 {
-    abstract internal class BasePage
+    abstract public class BasePage
     {
         private WebDriverWait? explicitWait;
 
@@ -27,7 +27,7 @@ namespace EcommerceDemo.commons
         {
             if (locator.StartsWith("Xpath") || locator.StartsWith("xpath=") || locator.StartsWith("XPATH="))
             {
-                locator = string.Format(locator, (string[]) dynamicValues);
+                locator = string.Format(locator, (string[])dynamicValues);
             }
             return locator;
         }
@@ -587,7 +587,7 @@ namespace EcommerceDemo.commons
                 }
             });
 
-            Func<IWebDriver, bool> jsLoad = new ((IWebDriver driver) =>
+            Func<IWebDriver, bool> jsLoad = new((IWebDriver driver) =>
             {
                 string? jsLoadStatus = jsExecutor.ExecuteScript("return document.readyState").ToString();
                 if (jsLoadStatus is not null)
@@ -602,7 +602,7 @@ namespace EcommerceDemo.commons
 
         protected string GetElementValidationMessage(IWebDriver driver, string locator)
         {
-            jsExecutor = (IJavaScriptExecutor) driver;
+            jsExecutor = (IJavaScriptExecutor)driver;
             return (string)jsExecutor.ExecuteScript("return arguments[0].validationMessage;", GetElement(driver, locator));
         }
 
@@ -618,7 +618,7 @@ namespace EcommerceDemo.commons
             List<IWebElement> elements = GetElements(driver, locator);
             jsExecutor = (IJavaScriptExecutor)driver;
             bool status = true;
-            foreach(IWebElement element in elements)
+            foreach (IWebElement element in elements)
             {
                 status = (bool)jsExecutor.ExecuteScript("return arguments[0].complete && typeof arguments[0].naturalWidth != 'undefined' && arguments[0].naturalWidth > 0", element);
             }
