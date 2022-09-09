@@ -6,6 +6,5 @@ namespace EcommerceDemo.commons
     {
         public const int longTimeout = 20;
         public const int shortTimeout = 10;
-
     }
 }
