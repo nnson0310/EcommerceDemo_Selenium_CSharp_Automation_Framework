@@ -13,15 +13,20 @@ namespace EcommerceDemo.commons
         private DriverHelper? driverHelper;
         private readonly string? url = MethodHelper.GetEnvironmentParams("url");
 
+        protected IWebDriver? GetDriver()
+        {
+            return driver;
+        }
+
         [OneTimeSetUp]
-        public void GlobalSetup()
+        protected void GlobalSetup()
         {
             driverHelper = new();
             ExtentTestManager.CreateParentTest(GetType().Name);
         }
 
         [SetUp]
-        public void Setup()
+        protected void Setup()
         {
             ExtentTestManager.CreateChildTest(TestContext.CurrentContext.Test.Name);
             driver = driverHelper!.GetDriver();
@@ -29,13 +34,13 @@ namespace EcommerceDemo.commons
         }
 
         [TearDown]
-        public void TearDown()
+        protected void TearDown()
         {
             driverHelper!.GenerateReportAndCloseBrowser();
         }
 
         [OneTimeTearDown]
-        public void GlobalTearDown()
+        protected void GlobalTearDown()
         {
             ExtentReportHelper.GetExtentReports().Flush();
         }

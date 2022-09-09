@@ -7,7 +7,7 @@ namespace EcommerceDemo.extents
 {
     public class ExtentReportHelper
     {
-        public static ExtentReports? extentReports;
+        private static ExtentReports? extentReports;
 
         public static ExtentReports GetExtentReports()
         {
@@ -25,6 +25,15 @@ namespace EcommerceDemo.extents
                 reporter.Config.DocumentTitle = "Extent Report";
                 reporter.Config.ReportName = MethodHelper.GetProjectName() + " Report";
                 reporter.Config.Theme = Theme.Standard;
+
+                // attach environment information to report
+                extentReports.AddSystemInfo("browser", "firefox");
+                extentReports.AddSystemInfo("browser_version", "latest");
+                extentReports.AddSystemInfo("environment", "local");
+                extentReports.AddSystemInfo("platform", "Windows");
+                extentReports.AddSystemInfo("platform version", "10");
+
+                // attach specific reporter
                 extentReports.AttachReporter(reporter);
             }
             return extentReports;

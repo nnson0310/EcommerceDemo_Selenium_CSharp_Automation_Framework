@@ -33,8 +33,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="page_interfaces\" />
-		<Folder Include="page_objects\" />
 		<Folder Include="reports\" />
 	</ItemGroup>
 
