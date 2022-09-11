@@ -1,15 +1,16 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 
 namespace EcommerceDemo.env_factory
 {
-    internal class CloudEnvFactory: IEnvFactory
+    public class CloudEnvFactory: IEnvFactory
     {
         private string browserName;
         private string browserVersion;
         private string os;
         private string osVersion;
 
-        private IWebDriver? driver;
+        //private IWebDriver? driver;
 
         public CloudEnvFactory(string browserName, string browserVersion, string os, string osVersion)
         {
@@ -21,7 +22,7 @@ namespace EcommerceDemo.env_factory
 
         public IWebDriver InitDriver()
         {
-            return driver;
+            throw new NotImplementedException();
         }
     }
 }

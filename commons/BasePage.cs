@@ -39,7 +39,8 @@ namespace EcommerceDemo.commons
 
         private By GetByLocator(string locator)
         {
-            By? by = null;
+            By? by;
+            Console.WriteLine(locator);
 
             if (locator.StartsWith("id=") || locator.StartsWith("ID=") || locator.StartsWith("Id="))
             {
@@ -212,6 +213,18 @@ namespace EcommerceDemo.commons
             GetElement(driver, GetDynamicXpath(locator, dynamicValues)).Click();
         }
 
+        protected void ClickToElementByAction(IWebDriver driver, string locator)
+        {
+            Actions action = new(driver);
+            action.MoveToElement(GetElement(driver, locator)).Click().Build().Perform();
+        }
+
+        protected void ClickToElementByAction(IWebDriver driver, string locator, params string[] dynamicValues)
+        {
+            Actions action = new(driver);
+            action.MoveToElement(GetElement(driver, GetDynamicXpath(locator, dynamicValues))).Click().Build().Perform();
+        }
+
         protected void SendKeyToElement(IWebDriver driver, string locator, string value)
         {
             GetElement(driver, locator).Clear();
@@ -243,44 +256,44 @@ namespace EcommerceDemo.commons
 
         public void PressEnterButton(IWebDriver driver)
         {
-            Actions actions = new Actions(driver);
+            Actions actions = new(driver);
             actions.SendKeys(Keys.Enter).Perform();
         }
 
         public void pressTabButton(WebDriver driver)
         {
-            Actions actions = new Actions(driver);
+            Actions actions = new(driver);
             actions.SendKeys(Keys.Tab).Perform();
         }
 
         public void pressSpaceButton(WebDriver driver)
         {
-            Actions actions = new Actions(driver);
+            Actions actions = new(driver);
             actions.SendKeys(Keys.Space).Perform();
         }
 
         protected void SelectItemInDropDown(IWebDriver driver, string locator, string text)
         {
-            SelectElement select = new SelectElement(GetElement(driver, locator));
+            SelectElement select = new(GetElement(driver, locator));
             select.SelectByText(text);
         }
 
         protected void SelectItemInDropDown(IWebDriver driver, string locator, string text, params string[] dynamicValues)
         {
-            SelectElement select = new SelectElement(GetElement(driver, GetDynamicXpath(locator, dynamicValues)));
+            SelectElement select = new(GetElement(driver, GetDynamicXpath(locator, dynamicValues)));
             select.SelectByText(text);
         }
 
         protected IWebElement GetSelectedItemInDropDown(IWebDriver driver, string locator)
         {
-            SelectElement select = new SelectElement(GetElement(driver, locator));
+            SelectElement select = new(GetElement(driver, locator));
 
             return select.SelectedOption;
         }
 
         protected bool IsDropdownMultiple(IWebDriver driver, string locator)
         {
-            SelectElement select = new SelectElement(GetElement(driver, locator));
+            SelectElement select = new(GetElement(driver, locator));
 
             return select.IsMultiple;
         }
@@ -494,13 +507,13 @@ namespace EcommerceDemo.commons
 
         protected void HoverToElement(IWebDriver driver, string locator)
         {
-            Actions actions = new Actions(driver);
+            Actions actions = new(driver);
             actions.MoveToElement(GetElement(driver, locator)).Perform();
         }
 
         protected void HoverToElement(IWebDriver driver, string locator, params string[] dynamicValues)
         {
-            Actions actions = new Actions(driver);
+            Actions actions = new(driver);
             actions.MoveToElement(GetElement(driver, GetDynamicXpath(locator, dynamicValues))).Perform();
         }
 
@@ -537,12 +550,6 @@ namespace EcommerceDemo.commons
         {
             jsExecutor = (IJavaScriptExecutor)driver;
             jsExecutor.ExecuteScript("arguments[0].click();", GetElement(driver, locator));
-        }
-
-        protected void ClickToElementByAction(IWebDriver driver, string locator)
-        {
-            Actions actions = new Actions(driver);
-            actions.MoveToElement(GetElement(driver, locator)).Click().Build().Perform();
         }
 
         protected void ScrollToElement(IWebDriver driver, string locator)
