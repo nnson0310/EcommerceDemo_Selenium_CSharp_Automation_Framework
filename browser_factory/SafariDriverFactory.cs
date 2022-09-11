@@ -3,7 +3,7 @@ using OpenQA.Selenium.Safari;
 
 namespace EcommerceDemo.browser_factory
 {
-    internal class SafariDriverFactory: IBrowserDriverFactory
+    public class SafariDriverFactory: IBrowserDriverFactory
     {
         public IWebDriver CreateDriver()
         {

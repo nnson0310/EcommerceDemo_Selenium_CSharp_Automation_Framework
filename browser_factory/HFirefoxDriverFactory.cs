@@ -1,11 +1,10 @@
-﻿using EcommerceDemo.commons;
-using EcommerceDemo.helpers;
+﻿using EcommerceDemo.helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 
 namespace EcommerceDemo.browser_factory
 {
-    internal class HFirefoxDriverFactory : IBrowserDriverFactory
+    public class HFirefoxDriverFactory : IBrowserDriverFactory
     {
         public IWebDriver CreateDriver()
         {

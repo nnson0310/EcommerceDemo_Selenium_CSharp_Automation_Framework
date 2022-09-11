@@ -2,7 +2,7 @@
 
 namespace EcommerceDemo.browser_factory
 {
-    internal interface IBrowserDriverFactory
+    public interface IBrowserDriverFactory
     {
         public IWebDriver CreateDriver();
     }

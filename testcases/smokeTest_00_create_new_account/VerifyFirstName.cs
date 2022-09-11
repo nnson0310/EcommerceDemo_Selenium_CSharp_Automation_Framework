@@ -52,7 +52,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         public void TC_Create_New_Account_01_First_Name_Can_Not_Contain_Special_Chars(
             string firstName,
             string lastName,
-            string email, 
+            string email,
             string password,
             string passwordConfirm
         )

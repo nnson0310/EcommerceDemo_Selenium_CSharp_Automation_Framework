@@ -11,7 +11,7 @@ using System.Reflection;
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
     [TestFixture]
-    public class VerifyEmail: BaseTest
+    public class VerifyEmail : BaseTest
     {
         private IWebDriver driver;
         private CreateNewAccountPage createNewAccountPage;
