@@ -1,5 +1,4 @@
-﻿using EcommerceDemo.commons;
-using EcommerceDemo.helpers;
+﻿using EcommerceDemo.helpers;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
