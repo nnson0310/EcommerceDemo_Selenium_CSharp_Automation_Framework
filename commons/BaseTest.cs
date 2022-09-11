@@ -35,7 +35,8 @@ namespace EcommerceDemo.commons
         [TearDown]
         protected void TearDown()
         {
-            driverHelper.GenerateReportAndCloseBrowser();
+            driverHelper.GenerateExtentReport();
+            driverHelper.CloseBrowserAndKillProcess();
         }
 
         [OneTimeTearDown]

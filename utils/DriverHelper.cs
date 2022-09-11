@@ -7,6 +7,7 @@ using EcommerceDemo.helpers;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Remote;
 using System.Diagnostics;
 
 namespace EcommerceDemo.utils
@@ -15,13 +16,13 @@ namespace EcommerceDemo.utils
     {
         private IWebDriver? driver;
 
-        private string? environmentName = MethodHelper.GetEnvironmentParams("env");
-        private string? browser = MethodHelper.GetEnvironmentParams("browser");
-        private string? browserVersion = MethodHelper.GetEnvironmentParams("browser_version");
-        private string? ipAddress = MethodHelper.GetEnvironmentParams("ip_address");
-        private string? port = MethodHelper.GetEnvironmentParams("port");
-        private string? os = MethodHelper.GetEnvironmentParams("os");
-        private string? osVersion = MethodHelper.GetEnvironmentParams("os_version");
+        public static string? environmentName = MethodHelper.GetEnvironmentParams("env");
+        public static string? browser = MethodHelper.GetEnvironmentParams("browser");
+        public static string? browserVersion = MethodHelper.GetEnvironmentParams("browser_version");
+        public static string? ipAddress = MethodHelper.GetEnvironmentParams("ip_address");
+        public static string? port = MethodHelper.GetEnvironmentParams("port");
+        public static string? os = MethodHelper.GetEnvironmentParams("os");
+        public static string? osVersion = MethodHelper.GetEnvironmentParams("os_version");
 
         public IWebDriver GetDriver()
         {
@@ -40,6 +41,17 @@ namespace EcommerceDemo.utils
             {
                 throw new ArgumentNullException("Web driver can not be intialized.");
             }
+
+            // get browser info to attach to extent reports
+            ICapabilities cap;
+            if (environmentName == "cloud")
+            {
+                cap = ((RemoteWebDriver)driver).Capabilities;
+            }
+            cap = ((WebDriver)driver).Capabilities;
+            browser = cap.GetCapability("browserName").ToString();
+            browserVersion = cap.GetCapability("browserVersion").ToString();
+
             return driver;
         }
 
@@ -53,7 +65,6 @@ namespace EcommerceDemo.utils
             port ??= "4444";
             os ??= "Windows";
             osVersion ??= "10";
-
 
             driver = environmentName.ToLower() switch
             {
@@ -73,7 +84,7 @@ namespace EcommerceDemo.utils
             return MediaEntityBuilder.CreateScreenCaptureFromBase64String(screenshot, testName).Build();
         }
 
-        public void GenerateReportAndCloseBrowser()
+        public void GenerateExtentReport()
         {
             try
             {
@@ -107,17 +118,13 @@ namespace EcommerceDemo.utils
             {
                 Debug.WriteLine(e.ToString());
             }
-            finally
-            {
-                CloseBrowserAndKillProcess();
-            }
         }
 
         /// <summary>
         /// Close browser and kill all process though cmd
         /// Check os is "Windows" or "Mac" to run corresponding cli
         /// </summary>
-        private void CloseBrowserAndKillProcess()
+        public void CloseBrowserAndKillProcess()
         {
             string cmd = "";
             try

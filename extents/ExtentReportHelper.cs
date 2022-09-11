@@ -2,6 +2,7 @@
 using AventStack.ExtentReports.Reporter;
 using EcommerceDemo.helpers;
 using AventStack.ExtentReports.Reporter.Configuration;
+using EcommerceDemo.utils;
 
 namespace EcommerceDemo.extents
 {
@@ -9,7 +10,7 @@ namespace EcommerceDemo.extents
     {
         private static ExtentReports? extentReports;
 
-        public static ExtentReports GetExtentReports()
+        public static ExtentReports InitExtentReports()
         {
             if (extentReports is null)
             {
@@ -26,16 +27,26 @@ namespace EcommerceDemo.extents
                 reporter.Config.ReportName = MethodHelper.GetProjectName() + " Report";
                 reporter.Config.Theme = Theme.Standard;
 
-                // attach environment information to report
-                extentReports.AddSystemInfo("browser", "firefox");
-                extentReports.AddSystemInfo("browser_version", "latest");
-                extentReports.AddSystemInfo("environment", "local");
-                extentReports.AddSystemInfo("platform", "Windows");
-                extentReports.AddSystemInfo("platform version", "10");
-
                 // attach specific reporter
                 extentReports.AttachReporter(reporter);
             }
+            return extentReports;
+        }
+
+        public static ExtentReports GetExtentReports()
+        {
+            if (extentReports is null)
+            {
+                throw new ArgumentNullException("Instance of ExtentReports class can not be intialized.");
+            }
+
+            //attach runtime information to extent report
+            extentReports.AddSystemInfo("browser", DriverHelper.browser);
+            extentReports.AddSystemInfo("browser_version", DriverHelper.browserVersion);
+            extentReports.AddSystemInfo("environment", DriverHelper.environmentName);
+            extentReports.AddSystemInfo("os", DriverHelper.os);
+            extentReports.AddSystemInfo("os version", DriverHelper.osVersion);
+
             return extentReports;
         }
     }
