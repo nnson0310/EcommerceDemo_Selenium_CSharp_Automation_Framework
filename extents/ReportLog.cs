@@ -18,5 +18,10 @@ namespace EcommerceDemo.extents
         {
             ExtentTestManager.GetTest().Skip(message);
         }
+
+        public static void Info(string message)
+        {
+            ExtentTestManager.GetTest().Info(message);
+        }
     }
 }

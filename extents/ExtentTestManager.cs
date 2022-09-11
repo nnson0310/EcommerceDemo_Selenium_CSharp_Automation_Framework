@@ -21,14 +21,24 @@ namespace EcommerceDemo.extents
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static ExtentTest CreateChildTest(string testName, string? testDesc = null)
         {
-            childTest = parentTest!.CreateNode(testName, testDesc);
+            if (parentTest is null)
+            {
+                throw new ArgumentNullException(testName, "Parent of ExtentTest class can not be intialized.");
+            }
+
+            childTest = parentTest.CreateNode(testName, testDesc);
             return childTest;
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static ExtentTest GetTest()
         {
-            return childTest!;
+            if (childTest is null)
+            {
+                throw new ArgumentNullException("ExtentTest class can not be intialized.");
+            }
+
+            return childTest;
         }
     }
 }

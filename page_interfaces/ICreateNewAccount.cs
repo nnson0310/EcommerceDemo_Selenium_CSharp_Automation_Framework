@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EcommerceDemo.page_interfaces
+﻿namespace EcommerceDemo.page_interfaces
 {
-    internal interface ICreateNewAccount
+    public interface ICreateNewAccount
     {
+        public const string CREATE_AN_ACCOUNT_BUTTON = "xpath=//button[@title='{0}']";
+        public const string VALIDATION_ERROR_MESSAGE_LABEL_DIV = "xpath=//input[@id='{0}']//following-sibling::div[text()='{1}']";
+        public const string ERROR_MESSAGE_LABEL_DIV = "xpath=//div[contains(@class, 'message-error')]//div[text()='{0}']";
     }
 }
