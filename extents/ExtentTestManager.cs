@@ -14,7 +14,7 @@ namespace EcommerceDemo.extents
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static ExtentTest CreateParentTest(string testName, string? testDesc = null)
         {
-            parentTest = ExtentReportHelper.GetExtentReports().CreateTest(testName, testDesc);
+            parentTest = ExtentReportHelper.InitExtentReports().CreateTest(testName, testDesc);
             return parentTest;
         }
 
