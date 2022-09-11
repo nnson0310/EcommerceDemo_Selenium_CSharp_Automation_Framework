@@ -13,12 +13,12 @@ namespace EcommerceDemo.page_objects
             return pageInitManager;
         }
 
-        public HomePage GetHomePage(IWebDriver? driver)
+        public HomePage GetHomePage(IWebDriver driver)
         {
             return new HomePage(driver);
         }
 
-        public CreateNewAccountPage GetCreateNewAccountPage(IWebDriver? driver)
+        public CreateNewAccountPage GetCreateNewAccountPage(IWebDriver driver)
         {
             return new CreateNewAccountPage(driver);
         }

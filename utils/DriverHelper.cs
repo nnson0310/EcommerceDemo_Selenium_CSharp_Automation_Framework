@@ -23,7 +23,7 @@ namespace EcommerceDemo.utils
         private string? os = MethodHelper.GetEnvironmentParams("os");
         private string? osVersion = MethodHelper.GetEnvironmentParams("os_version");
 
-        public IWebDriver? GetDriver()
+        public IWebDriver GetDriver()
         {
             try
             {
@@ -34,6 +34,11 @@ namespace EcommerceDemo.utils
             {
                 Debug.WriteLine(e.ToString());
                 ReportLog.Fail("Failed to init browser driver.");
+            }
+
+            if (driver is null)
+            {
+                throw new ArgumentNullException("Web driver can not be intialized.");
             }
             return driver;
         }
@@ -75,15 +80,15 @@ namespace EcommerceDemo.utils
                 var status = TestContext.CurrentContext.Result.Outcome.Status;
                 var errorMessage = string.IsNullOrEmpty(TestContext.CurrentContext.Result.Message)
                     ? ""
-                    : string.Format("<pre>{0)<pre>", TestContext.CurrentContext.Result.Message);
+                    : string.Format("<pre>{0}<pre>", TestContext.CurrentContext.Result.Message);
                 var stackTrace = string.IsNullOrEmpty(TestContext.CurrentContext.Result.StackTrace)
                     ? ""
-                    : string.Format("<pre>{0)<pre>", TestContext.CurrentContext.Result.StackTrace);
+                    : string.Format("<pre>{0}<pre>", TestContext.CurrentContext.Result.StackTrace);
 
                 switch (status)
                 {
                     case TestStatus.Skipped:
-                        ReportLog.Pass("Test skipped");
+                        ReportLog.Skip("Test skipped");
                         break;
                     case TestStatus.Passed:
                         ReportLog.Pass("Test passed");

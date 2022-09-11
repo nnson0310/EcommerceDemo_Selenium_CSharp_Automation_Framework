@@ -1,13 +1,8 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EcommerceDemo.env_factory
 {
-    internal class GridEnvFactory: IEnvFactory
+    public class GridEnvFactory: IEnvFactory
     {
         private string browserName;
         private string ipAddress;
