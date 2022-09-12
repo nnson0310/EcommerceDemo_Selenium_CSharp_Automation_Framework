@@ -4,7 +4,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace EcommerceDemo.browser_factory
 {
-    internal class ChromeDriverFactory : IBrowserDriverFactory
+    public class ChromeDriverFactory : IBrowserDriverFactory
     {
         public IWebDriver CreateDriver()
         {

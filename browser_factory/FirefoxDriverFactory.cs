@@ -15,7 +15,7 @@ namespace EcommerceDemo.browser_factory
                 LogLevel = FirefoxDriverLogLevel.Fatal
             };
 
-            firefoxOptions.AddArguments(MethodHelper.GetDriverOptionArguments());
+            //firefoxOptions.AddArguments(MethodHelper.GetDriverOptionArguments());
 
             return new FirefoxDriver(MethodHelper.GetBrowserDriverDir(), firefoxOptions);
         }

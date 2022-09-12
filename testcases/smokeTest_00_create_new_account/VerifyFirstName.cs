@@ -42,7 +42,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             string testMethod = MethodBase.GetCurrentMethod()!.Name;
 
             ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle);
+            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, firstNameFieldId);
 
             ReportLog.Info(testMethod + " - Step 02: Verify that '" + requireValidationErrorMessage + "' error message is displayed");
             Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, firstNameFieldId, requireValidationErrorMessage), Is.True);
@@ -75,7 +75,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             createNewAccountPage.EnterToDynamicTextboxById(driver, passwordConfirm, passwordConfirmFieldId);
 
             ReportLog.Info(testMethod + " - Step 06: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle);
+            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, firstNameFieldId);
 
             ReportLog.Info(testMethod + " - Step 07: Verify that error message = '" + errorMessage + "' is displayed");
             Assert.That(createNewAccountPage.IsErrorMessageDisplayed(driver, errorMessage), Is.True);
