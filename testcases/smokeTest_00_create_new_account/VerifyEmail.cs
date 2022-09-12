@@ -16,11 +16,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         private IWebDriver driver;
         private CreateNewAccountPage createNewAccountPage;
 
-        private const string firstNameFieldId = "firstname";
-        private const string lastNameFieldId = "lastname";
         private const string emailFieldId = "email_address";
-        private const string passwordFieldId = "password";
-        private const string passwordConfirmFieldId = "password-confirmation";
         private const string createAnAccountHeaderLinkText = "Create an Account";
         private const string createAnAccountButtonTitle = "Create an Account";
         private const string requireValidationErrorMessage = "This is a required field.";
@@ -43,7 +39,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             string testMethod = MethodBase.GetCurrentMethod()!.Name;
 
             ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle);
+            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, emailFieldId);
 
             ReportLog.Info(testMethod + " - Step 02: Verify that '" + requireValidationErrorMessage + "' error message is displayed");
             Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, emailFieldId, requireValidationErrorMessage), Is.True);
@@ -58,12 +54,10 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             createNewAccountPage.EnterToDynamicTextboxById(driver, email, emailFieldId);
 
             ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle);
+            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, emailFieldId);
 
             ReportLog.Info(testMethod + " - Step 02: Verify that '" + invalidEmailValidationErrorMessage + "' error message is displayed");
             Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, emailFieldId, invalidEmailValidationErrorMessage), Is.True);
         }
-
-
     }
 }

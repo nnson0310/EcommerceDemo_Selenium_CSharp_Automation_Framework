@@ -40,7 +40,6 @@ namespace EcommerceDemo.commons
         private By GetByLocator(string locator)
         {
             By? by;
-            Console.WriteLine(locator);
 
             if (locator.StartsWith("id=") || locator.StartsWith("ID=") || locator.StartsWith("Id="))
             {
@@ -260,13 +259,13 @@ namespace EcommerceDemo.commons
             actions.SendKeys(Keys.Enter).Perform();
         }
 
-        public void pressTabButton(WebDriver driver)
+        public void PressTabButton(WebDriver driver)
         {
             Actions actions = new(driver);
             actions.SendKeys(Keys.Tab).Perform();
         }
 
-        public void pressSpaceButton(WebDriver driver)
+        public void PressSpaceButton(WebDriver driver)
         {
             Actions actions = new(driver);
             actions.SendKeys(Keys.Space).Perform();
@@ -568,6 +567,12 @@ namespace EcommerceDemo.commons
         {
             jsExecutor = (IJavaScriptExecutor)driver;
             jsExecutor.ExecuteScript("arguments[0].removeAttribute('" + attribute + "');", GetElement(driver, locator));
+        }
+
+        protected void RemoveAttributeInDOM(IWebDriver driver, string locator, string attribute, params string[] dynamicValues)
+        {
+            jsExecutor = (IJavaScriptExecutor)driver;
+            jsExecutor.ExecuteScript("arguments[0].removeAttribute('" + attribute + "');", GetElement(driver, GetDynamicXpath(locator, dynamicValues)));
         }
 
         protected void ChangeAttribute(IWebDriver driver, string locator, string attributeName, string attributeValue)

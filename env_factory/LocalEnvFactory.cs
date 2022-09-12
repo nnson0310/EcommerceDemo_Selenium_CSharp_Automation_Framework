@@ -4,7 +4,7 @@ using Browser = EcommerceDemo.enums.EnumCollect.BrowserName;
 
 namespace EcommerceDemo.env_factory
 {
-    internal class LocalEnvFactory: IEnvFactory
+    internal class LocalEnvFactory : IEnvFactory
     {
         private readonly string browserName;
         private IWebDriver? driver;
@@ -26,9 +26,9 @@ namespace EcommerceDemo.env_factory
             {
                 driver = new FirefoxDriverFactory().CreateDriver();
             }
-            else if (browser == Browser.Edge)
+            else if (browser == Browser.MSEdge)
             {
-                driver = new EdgeDriverFactory().CreateDriver();
+                driver = new MSEdgeDriverFactory().CreateDriver();
             }
             else if (browser == Browser.H_Chrome)
             {

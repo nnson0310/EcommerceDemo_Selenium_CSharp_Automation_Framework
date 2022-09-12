@@ -4,7 +4,7 @@ using OpenQA.Selenium.Edge;
 
 namespace EcommerceDemo.browser_factory
 {
-    public class EdgeDriverFactory : IBrowserDriverFactory
+    public class MSEdgeDriverFactory : IBrowserDriverFactory
     {
         public IWebDriver CreateDriver()
         {
