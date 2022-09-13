@@ -1,4 +1,6 @@
 ﻿
+using EcommerceDemo.utils;
+
 namespace EcommerceDemo.testdata
 {
     public class CreateNewAccountParameters
@@ -31,7 +33,12 @@ namespace EcommerceDemo.testdata
             new object[]{"DAVID####"},
             new object[]{"DavidCopper"},
             new object[]{"david####"}
-    };
+        };
 
+        public static object[] InvalidConfirmPassword =
+        {
+            new object[] { "12345678" }
+
+        };
     }
 }

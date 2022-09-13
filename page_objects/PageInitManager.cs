@@ -1,4 +1,5 @@
 ﻿
+using EcommerceDemo.page_objects.user_common;
 using OpenQA.Selenium;
 
 namespace EcommerceDemo.page_objects
@@ -21,6 +22,11 @@ namespace EcommerceDemo.page_objects
         public CreateNewAccountPage GetCreateNewAccountPage(IWebDriver driver)
         {
             return new CreateNewAccountPage(driver);
+        }
+
+        public CustomerAccountPage GetCustomerAccountPage(IWebDriver driver)
+        {
+            return new CustomerAccountPage(driver);
         }
     }
 }

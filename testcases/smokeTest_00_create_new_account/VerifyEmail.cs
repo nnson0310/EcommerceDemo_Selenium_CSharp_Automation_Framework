@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
-    [TestFixture]
+    [TestFixture, Description("Verify email field of Create_New_Account form")]
     public class VerifyEmail : BaseTest
     {
         private IWebDriver driver;
@@ -33,7 +33,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
         }
 
-        [Test]
+        [Test, Description("Verify that email can not be blank")]
         public void TC_Create_New_Account_03_Email_Can_Not_Be_Blank()
         {
             string testMethod = MethodBase.GetCurrentMethod()!.Name;
@@ -45,7 +45,11 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, emailFieldId, requireValidationErrorMessage), Is.True);
         }
 
-        [TestCaseSource(typeof(CreateNewAccountParameters), nameof(CreateNewAccountParameters.InvalidEmail))]
+        [
+            Test,
+            TestCaseSource(typeof(CreateNewAccountParameters), nameof(CreateNewAccountParameters.InvalidEmail)),
+            Description("Verify that email must be valid format")
+        ]
         public void TC_Create_New_Account_04_Email_Must_Be_Valid_Format(string email)
         {
             string testMethod = MethodBase.GetCurrentMethod()!.Name;
