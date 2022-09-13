@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
-    [TestFixture]
+    [TestFixture, Description("Verify that first_name field of Create_New_Account page")]
     public class VerifyFirstName : BaseTest
     {
         private IWebDriver driver;
@@ -36,7 +36,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
         }
 
-        [Test]
+        [Test, Description("Verify that first_name can not be blank")]
         public void TC_Create_New_Account_01_First_Name_Can_Not_Be_Blank()
         {
             string testMethod = MethodBase.GetCurrentMethod()!.Name;
@@ -48,7 +48,11 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, firstNameFieldId, requireValidationErrorMessage), Is.True);
         }
 
-        [TestCaseSource(typeof(CreateNewAccountParameters), nameof(CreateNewAccountParameters.InvalidFirstName))]
+        [
+            Test,
+            TestCaseSource(typeof(CreateNewAccountParameters), nameof(CreateNewAccountParameters.InvalidFirstName)),
+            Description("Verify that first_name can not contain special chars")
+        ]
         public void TC_Create_New_Account_01_First_Name_Can_Not_Contain_Special_Chars(
             string firstName,
             string lastName,

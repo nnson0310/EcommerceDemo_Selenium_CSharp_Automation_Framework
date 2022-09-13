@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
-    [TestFixture]
+    [TestFixture, Description("Verify password field of Create_New_Account form")]
     public class VerifyPassword : BaseTest
     {
         private IWebDriver driver;
@@ -36,7 +36,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
         }
 
-        [Test]
+        [Test, Description("Verify that password can not be blank")]
         public void TC_Create_New_Account_05_Password_Can_Not_Be_Blank()
         {
             string testMethod = MethodBase.GetCurrentMethod()!.Name;
@@ -48,7 +48,11 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, passwordFieldId, requireValidationErrorMessage), Is.True);
         }
 
-        [TestCaseSource(typeof(CreateNewAccountParameters), nameof(CreateNewAccountParameters.InvalidLengthPassword))]
+        [
+            Test,
+            TestCaseSource(typeof(CreateNewAccountParameters), nameof(CreateNewAccountParameters.InvalidLengthPassword)),
+            Description("Verify that password must be at least 8 chars length")
+        ]
         public void TC_Create_New_Account_06_Password_Must_Be_At_Least_8_Chars_Length(string password)
         {
             string testMethod = MethodBase.GetCurrentMethod()!.Name;
@@ -64,7 +68,11 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         }
 
 
-        [TestCaseSource(typeof(CreateNewAccountParameters), nameof(CreateNewAccountParameters.ThreeClassesCharPassword))]
+        [
+            Test,
+            TestCaseSource(typeof(CreateNewAccountParameters), nameof(CreateNewAccountParameters.ThreeClassesCharPassword)),
+            Description("Verify that password must contain at least 3 different classes of chars")
+        ]
         public void TC_Create_New_Account_07_Password_Must_Be_At_Least_3_Different_Char_Classes(string password)
         {
             string testMethod = MethodBase.GetCurrentMethod()!.Name;

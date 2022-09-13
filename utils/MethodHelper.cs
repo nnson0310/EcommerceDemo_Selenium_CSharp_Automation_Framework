@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using NUnit.Framework;
+using System.Configuration;
 using System.Reflection;
 
 namespace EcommerceDemo.helpers
@@ -43,6 +44,16 @@ namespace EcommerceDemo.helpers
         public static string GetBrowserDriverDir()
         {
             return GetProjectRootDir() + "browser_drivers";
+        }
+
+        public static string CleanString(string str)
+        {
+            return str.Trim().Replace("\r\n", "");
+        }
+
+        public static string? GetTestMethodName()
+        {
+            return TestContext.CurrentContext.Test.MethodName;
         }
     }
 }
