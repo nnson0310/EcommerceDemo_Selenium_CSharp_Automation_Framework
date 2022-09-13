@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+	<TestRunParameters>
+		<Parameter name="CpsWebAppUrl" value="https://localhost:44315/" />
+	</TestRunParameters>
+
+	<NUnit>
+		<TestOutputXml>D:\test_results</TestOutputXml>
+		<WorkDirectory>work</WorkDirectory>
+	</NUnit>
+</RunSettings>
