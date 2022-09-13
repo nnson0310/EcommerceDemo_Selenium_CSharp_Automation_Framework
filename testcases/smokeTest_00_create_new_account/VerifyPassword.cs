@@ -1,6 +1,7 @@
 ﻿
 using EcommerceDemo.commons;
 using EcommerceDemo.extents;
+using EcommerceDemo.helpers;
 using EcommerceDemo.page_objects;
 using EcommerceDemo.testcases.smokeTest_pre_condition;
 using EcommerceDemo.testdata;
@@ -39,7 +40,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         [Test, Description("Verify that password can not be blank")]
         public void TC_Create_New_Account_05_Password_Can_Not_Be_Blank()
         {
-            string testMethod = MethodBase.GetCurrentMethod()!.Name;
+            string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
             createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, passwordFieldId);
@@ -55,7 +56,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         ]
         public void TC_Create_New_Account_06_Password_Must_Be_At_Least_8_Chars_Length(string password)
         {
-            string testMethod = MethodBase.GetCurrentMethod()!.Name;
+            string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01 Enter password = " + password);
             createNewAccountPage.EnterToDynamicTextboxById(driver, password, passwordFieldId);
@@ -75,7 +76,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         ]
         public void TC_Create_New_Account_07_Password_Must_Be_At_Least_3_Different_Char_Classes(string password)
         {
-            string testMethod = MethodBase.GetCurrentMethod()!.Name;
+            string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01 Enter password = " + password);
             createNewAccountPage.EnterToDynamicTextboxById(driver, password, passwordFieldId);

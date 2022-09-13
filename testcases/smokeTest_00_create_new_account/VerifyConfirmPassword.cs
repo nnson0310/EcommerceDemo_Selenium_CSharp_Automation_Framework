@@ -1,5 +1,6 @@
 ﻿using EcommerceDemo.commons;
 using EcommerceDemo.extents;
+using EcommerceDemo.helpers;
 using EcommerceDemo.page_objects;
 using EcommerceDemo.testcases.smokeTest_pre_condition;
 using EcommerceDemo.testdata;
@@ -35,7 +36,8 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         [Test, Description("Verify that confirm_password can not be blank")]
         public void TC_Create_New_Account_08_Confirm_Password_Can_Not_Be_Blank()
         {
-            string testMethod = MethodBase.GetCurrentMethod()!.Name;
+            string? testMethod = MethodHelper.GetTestMethodName();
+
 
             ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
             createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, confirmPasswordFieldId);
@@ -51,7 +53,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         ]
         public void TC_Create_New_Account_09_Confirm_Password_Must_Match_Password(string confirmPassword)
         {
-            string testMethod = MethodBase.GetCurrentMethod()!.Name;
+            string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01: Enter confirm_password = " + confirmPassword);
             createNewAccountPage.EnterToDynamicTextboxById(driver, confirmPassword, confirmPasswordFieldId);
