@@ -1,6 +1,7 @@
 ﻿
 using EcommerceDemo.commons;
 using EcommerceDemo.extents;
+using EcommerceDemo.helpers;
 using EcommerceDemo.page_objects;
 using EcommerceDemo.testcases.smokeTest_pre_condition;
 using EcommerceDemo.testdata;
@@ -36,7 +37,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         [Test, Description("Verify that email can not be blank")]
         public void TC_Create_New_Account_03_Email_Can_Not_Be_Blank()
         {
-            string testMethod = MethodBase.GetCurrentMethod()!.Name;
+            string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
             createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, emailFieldId);
@@ -52,7 +53,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         ]
         public void TC_Create_New_Account_04_Email_Must_Be_Valid_Format(string email)
         {
-            string testMethod = MethodBase.GetCurrentMethod()!.Name;
+            string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01: Enter invalid first name contains special chars = " + email);
             createNewAccountPage.EnterToDynamicTextboxById(driver, email, emailFieldId);

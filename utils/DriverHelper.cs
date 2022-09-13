@@ -43,12 +43,11 @@ namespace EcommerceDemo.utils
             }
 
             // get browser info to attach to extent reports
-            ICapabilities cap;
+            ICapabilities cap = ((WebDriver)driver).Capabilities;
             if (environmentName == "cloud")
             {
                 cap = ((RemoteWebDriver)driver).Capabilities;
             }
-            cap = ((WebDriver)driver).Capabilities;
             browser = cap.GetCapability("browserName").ToString();
             browserVersion = cap.GetCapability("browserVersion").ToString();
 

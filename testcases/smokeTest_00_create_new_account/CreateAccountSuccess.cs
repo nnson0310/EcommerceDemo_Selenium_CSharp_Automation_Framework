@@ -1,13 +1,12 @@
 ﻿using EcommerceDemo.commons;
 using EcommerceDemo.extents;
+using EcommerceDemo.helpers;
 using EcommerceDemo.page_objects;
 using EcommerceDemo.page_objects.user_common;
 using EcommerceDemo.testcases.smokeTest_pre_condition;
-using EcommerceDemo.testdata;
 using EcommerceDemo.utils;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Reflection;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
@@ -59,7 +58,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         ]
         public void TC_Create_New_Account_10_Create_New_Account_Success()
         {
-            string testMethod = MethodBase.GetCurrentMethod()!.Name;
+            string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01: Enter first_name = " + firstName);
             createNewAccountPage.EnterToDynamicTextboxById(driver, firstName, firstNameFieldId);
