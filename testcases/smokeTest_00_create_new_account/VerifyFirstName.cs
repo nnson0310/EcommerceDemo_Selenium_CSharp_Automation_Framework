@@ -1,4 +1,5 @@
 ﻿using EcommerceDemo.commons;
+using EcommerceDemo.element_indentifiers;
 using EcommerceDemo.extents;
 using EcommerceDemo.helpers;
 using EcommerceDemo.page_objects;
@@ -6,7 +7,6 @@ using EcommerceDemo.testcases.smokeTest_pre_condition;
 using EcommerceDemo.testdata;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Reflection;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
@@ -16,16 +16,6 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         private IWebDriver driver;
         private CreateNewAccountPage createNewAccountPage;
 
-        private const string firstNameFieldId = "firstname";
-        private const string lastNameFieldId = "lastname";
-        private const string emailFieldId = "email_address";
-        private const string passwordFieldId = "password";
-        private const string passwordConfirmFieldId = "password-confirmation";
-        private const string createAnAccountHeaderLinkText = "Create an Account";
-        private const string createAnAccountButtonTitle = "Create an Account";
-        private const string requireValidationErrorMessage = "This is a required field.";
-        private const string errorMessage = "First Name is not valid!";
-
         [SetUp]
         protected override void Setup()
         {
@@ -33,7 +23,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             driver = GetDriver();
 
             //pre_condition
-            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, createAnAccountHeaderLinkText);
+            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText);
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
         }
 
@@ -42,11 +32,15 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         {
             string? testMethod = MethodHelper.GetTestMethodName();
 
-            ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, firstNameFieldId);
+            ReportLog.Info(testMethod + " - Step 01: Click to '" + ICreateNewAccountUI.CreateAccountButtonName + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.CreateAccountButtonName);
 
-            ReportLog.Info(testMethod + " - Step 02: Verify that '" + requireValidationErrorMessage + "' error message is displayed");
-            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, firstNameFieldId, requireValidationErrorMessage), Is.True);
+            ReportLog.Info(testMethod + " - Step 02: Verify that '" + ICreateNewAccountUI.RequireErrorMessage + "' error message is displayed");
+            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(
+                driver,
+                ICreateNewAccountUI.FirstNameTextboxId,
+                ICreateNewAccountUI.RequireErrorMessage),
+                Is.True);
         }
 
         [
@@ -58,32 +52,31 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             string firstName,
             string lastName,
             string email,
-            string password,
-            string passwordConfirm
+            string password
         )
         {
             string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01: Enter invalid first name contains special chars = " + firstName);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, firstName, firstNameFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, firstName, ICreateNewAccountUI.FirstNameTextboxId);
 
             ReportLog.Info(testMethod + " - Step 02: Enter last name = " + lastName);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, lastName, lastNameFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, lastName, ICreateNewAccountUI.LastNameTextboxId);
 
             ReportLog.Info(testMethod + " - Step 03: Enter email = " + email);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, email, emailFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, email, ICreateNewAccountUI.EmailTextboxId);
 
             ReportLog.Info(testMethod + " - Step 04: Enter password = " + password);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, password, passwordFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, password, ICreateNewAccountUI.PasswordTextboxId);
 
-            ReportLog.Info(testMethod + " - Step 05: Enter password_confirm = " + passwordConfirm);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, passwordConfirm, passwordConfirmFieldId);
+            ReportLog.Info(testMethod + " - Step 05: Enter password_confirm = " + password);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, password, ICreateNewAccountUI.ConfirmPasswordTextboxId);
 
-            ReportLog.Info(testMethod + " - Step 06: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, firstNameFieldId);
+            ReportLog.Info(testMethod + " - Step 06: Click to '" + ICreateNewAccountUI.CreateAccountButtonName + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.CreateAccountButtonName);
 
-            ReportLog.Info(testMethod + " - Step 07: Verify that error message = '" + errorMessage + "' is displayed");
-            Assert.That(createNewAccountPage.IsErrorMessageDisplayed(driver, errorMessage), Is.True);
+            ReportLog.Info(testMethod + " - Step 07: Verify that error message = '" + ICreateNewAccountUI.InvalidFirstNameErrorMessage + "' is displayed");
+            Assert.That(createNewAccountPage.IsErrorMessageDisplayed(driver, ICreateNewAccountUI.InvalidEmailErrorMessage), Is.True);
         }
     }
 }

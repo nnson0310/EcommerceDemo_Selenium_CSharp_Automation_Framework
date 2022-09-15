@@ -1,4 +1,5 @@
 ﻿using EcommerceDemo.commons;
+using EcommerceDemo.element_indentifiers;
 using EcommerceDemo.extents;
 using EcommerceDemo.helpers;
 using EcommerceDemo.page_objects;
@@ -17,16 +18,6 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         private CreateNewAccountPage createNewAccountPage;
         private CustomerAccountPage? customerAccountPage;
 
-        private const string firstNameFieldId = "firstname";
-        private const string lastNameFieldId = "lastname";
-        private const string emailFieldId = "email_address";
-        private const string passwordFieldId = "password";
-        private const string confirmPasswordFieldId = "password-confirmation";
-        private const string createAnAccountHeaderLinkText = "Create an Account";
-        private const string createAnAccountButtonTitle = "Create an Account";
-        private const string successMessage = "Thank you for registering with Fake Online Clothing Store.";
-
-        //test data
         private string firstName;
         private string lastName;
         private string fullName;
@@ -41,9 +32,11 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             driver = GetDriver();
 
             //pre_condition
-            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, createAnAccountHeaderLinkText);
+            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText);
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
 
+
+            //test data
             firstName = DataFaker.GetRandomFirstName();
             lastName = DataFaker.GetRandomLastName();
             email = DataFaker.GetRandomEmail();
@@ -61,26 +54,26 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01: Enter first_name = " + firstName);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, firstName, firstNameFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, firstName, ICreateNewAccountUI.FirstNameTextboxId);
 
             ReportLog.Info(testMethod + " - Step 02: Enter last_name = " + lastName);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, lastName, lastNameFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, lastName, ICreateNewAccountUI.LastNameTextboxId);
 
             ReportLog.Info(testMethod + " - Step 03: Enter email = " + email);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, email, emailFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, email, ICreateNewAccountUI.EmailTextboxId);
 
             ReportLog.Info(testMethod + " - Step 04: Enter password = " + password);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, password, passwordFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, password, ICreateNewAccountUI.PasswordTextboxId);
 
             ReportLog.Info(testMethod + " - Step 05: Enter confirm_password = " + password);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, password, confirmPasswordFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, password, ICreateNewAccountUI.ConfirmPasswordTextboxId);
 
-            ReportLog.Info(testMethod + " - Step 06: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, passwordFieldId);
+            ReportLog.Info(testMethod + " - Step 06: Click to '" + ICreateNewAccountUI.CreateAccountButtonName + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.CreateAccountButtonName);
             customerAccountPage = PageInitManager.GetPageInitManager().GetCustomerAccountPage(driver);
 
-            ReportLog.Info(testMethod + " - Step 07: Verify that '" + successMessage + "' error message is displayed");
-            Assert.That(customerAccountPage.GetSuccessMessageText(driver), Is.EqualTo(successMessage));
+            ReportLog.Info(testMethod + " - Step 07: Verify that '" + ICreateNewAccountUI.CreateSuccessMessage + "' message is displayed");
+            Assert.That(customerAccountPage.GetSuccessMessageText(driver), Is.EqualTo(ICreateNewAccountUI.CreateSuccessMessage));
 
             ReportLog.Info(testMethod + " - Step 08: Verify that contact information is correct. Registered full_name = " + fullName + " and registered email = " + email);
             Assert.That(customerAccountPage.GetContactInfo(driver), Is.EqualTo(contactInfo));

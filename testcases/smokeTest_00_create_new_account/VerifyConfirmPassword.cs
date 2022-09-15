@@ -1,4 +1,5 @@
 ﻿using EcommerceDemo.commons;
+using EcommerceDemo.element_indentifiers;
 using EcommerceDemo.extents;
 using EcommerceDemo.helpers;
 using EcommerceDemo.page_objects;
@@ -6,7 +7,6 @@ using EcommerceDemo.testcases.smokeTest_pre_condition;
 using EcommerceDemo.testdata;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Reflection;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
@@ -16,12 +16,6 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         private IWebDriver driver;
         private CreateNewAccountPage createNewAccountPage;
 
-        private const string confirmPasswordFieldId = "password-confirmation";
-        private const string createAnAccountHeaderLinkText = "Create an Account";
-        private const string createAnAccountButtonTitle = "Create an Account";
-        private const string requireValidationErrorMessage = "This is a required field.";
-        private const string matchValidationErrorMessage = "Please enter the same value again.";
-
         [SetUp]
         protected override void Setup()
         {
@@ -29,7 +23,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             driver = GetDriver();
 
             //pre_condition
-            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, createAnAccountHeaderLinkText);
+            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText);
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
         }
 
@@ -39,16 +33,20 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             string? testMethod = MethodHelper.GetTestMethodName();
 
 
-            ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, confirmPasswordFieldId);
+            ReportLog.Info(testMethod + " - Step 01: Click to '" + ICreateNewAccountUI.CreateAccountButtonName + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.CreateAccountButtonName);
 
-            ReportLog.Info(testMethod + " - Step 02: Verify that '" + requireValidationErrorMessage + "' error message is displayed");
-            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, confirmPasswordFieldId, requireValidationErrorMessage), Is.True);
+            ReportLog.Info(testMethod + " - Step 02: Verify that '" + ICreateNewAccountUI.RequireErrorMessage + "' error message is displayed");
+            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(
+                driver,
+                ICreateNewAccountUI.ConfirmPasswordTextboxId,
+                ICreateNewAccountUI.RequireErrorMessage),
+                Is.True);
         }
 
         [
             Test,
-            Description("Verify that confi"),
+            Description("Verify that confirm_password must be same as password"),
             TestCaseSource(typeof(CreateNewAccountParameters), nameof(CreateNewAccountParameters.InvalidConfirmPassword))
         ]
         public void TC_Create_New_Account_09_Confirm_Password_Must_Match_Password(string confirmPassword)
@@ -56,13 +54,17 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01: Enter confirm_password = " + confirmPassword);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, confirmPassword, confirmPasswordFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, confirmPassword, ICreateNewAccountUI.ConfirmPasswordTextboxId);
 
-            ReportLog.Info(testMethod + " - Step 02: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, confirmPasswordFieldId);
+            ReportLog.Info(testMethod + " - Step 02: Click to '" + ICreateNewAccountUI.CreateAccountButtonName + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.CreateAccountButtonName);
 
-            ReportLog.Info(testMethod + " - Step 03: Verify that '" + matchValidationErrorMessage + "' error message is displayed");
-            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, confirmPasswordFieldId, matchValidationErrorMessage), Is.True);
+            ReportLog.Info(testMethod + " - Step 03: Verify that '" + ICreateNewAccountUI.MatchPasswordErrorMessage + "' error message is displayed");
+            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(
+                driver,
+                ICreateNewAccountUI.ConfirmPasswordTextboxId,
+                ICreateNewAccountUI.MatchPasswordErrorMessage),
+                Is.True);
         }
     }
 }

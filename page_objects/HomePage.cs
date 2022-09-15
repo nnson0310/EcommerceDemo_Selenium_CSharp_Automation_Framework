@@ -11,6 +11,7 @@ namespace EcommerceDemo.page_objects
         public HomePage(IWebDriver driver)
         {
             this.driver = driver;
+            WaitUntilPageIsFullyLoaded(driver);
         }
     }
 }

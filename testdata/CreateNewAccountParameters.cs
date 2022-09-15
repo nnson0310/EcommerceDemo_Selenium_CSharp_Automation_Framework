@@ -7,7 +7,7 @@ namespace EcommerceDemo.testdata
     {
         public static object[] InvalidFirstName =
         {
-            new object[] {"david@!$#", "copper", "david@gmail.com", "David123", "David123"}
+            new object[] {"david@!$#", "copper", "david@gmail.com", "David123"}
         };
 
         public static object[] InvalidEmail =
