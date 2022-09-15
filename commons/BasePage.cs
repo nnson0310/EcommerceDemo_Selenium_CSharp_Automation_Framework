@@ -581,6 +581,16 @@ namespace EcommerceDemo.commons
             jsExecutor.ExecuteScript("arguments[0].setAttribute('" + attributeName + "', '" + attributeValue + "')", GetElement(driver, locator));
         }
 
+        protected void WaitUntilPageIsFullyLoaded(IWebDriver driver)
+        {
+            explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
+            explicitWait.Until(new Func<IWebDriver, bool>(driver =>
+            {
+                jsExecutor = (IJavaScriptExecutor)driver;
+                return jsExecutor.ExecuteScript("return document.readyState").Equals("complete");
+            }));
+        }
+
         protected bool AreJQueryAndJSLoadedSuccess(IWebDriver driver)
         {
             explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
@@ -653,7 +663,6 @@ namespace EcommerceDemo.commons
         protected void WaitForAllElementVisible(IWebDriver driver, string locator)
         {
             explicitWait = new WebDriverWait(driver, TimeSpan.FromSeconds(longTimeout));
-
             explicitWait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(GetByLocator(locator)));
         }
 

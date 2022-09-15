@@ -1,5 +1,6 @@
 ﻿
 using EcommerceDemo.commons;
+using EcommerceDemo.element_indentifiers;
 using EcommerceDemo.extents;
 using EcommerceDemo.helpers;
 using EcommerceDemo.page_objects;
@@ -7,7 +8,6 @@ using EcommerceDemo.testcases.smokeTest_pre_condition;
 using EcommerceDemo.testdata;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Reflection;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
@@ -17,12 +17,6 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         private IWebDriver driver;
         private CreateNewAccountPage createNewAccountPage;
 
-        private const string emailFieldId = "email_address";
-        private const string createAnAccountHeaderLinkText = "Create an Account";
-        private const string createAnAccountButtonTitle = "Create an Account";
-        private const string requireValidationErrorMessage = "This is a required field.";
-        private const string invalidEmailValidationErrorMessage = "Please enter a valid email address (Ex: johndoe@domain.com).";
-
         [SetUp]
         protected override void Setup()
         {
@@ -30,7 +24,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             driver = GetDriver();
 
             //pre_condition
-            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, createAnAccountHeaderLinkText);
+            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText);
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
         }
 
@@ -39,11 +33,15 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         {
             string? testMethod = MethodHelper.GetTestMethodName();
 
-            ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, emailFieldId);
+            ReportLog.Info(testMethod + " - Step 01: Click to '" + ICreateNewAccountUI.CreateAccountButtonName + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.CreateAccountButtonName);
 
-            ReportLog.Info(testMethod + " - Step 02: Verify that '" + requireValidationErrorMessage + "' error message is displayed");
-            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, emailFieldId, requireValidationErrorMessage), Is.True);
+            ReportLog.Info(testMethod + " - Step 02: Verify that '" + ICreateNewAccountUI.RequireErrorMessage + "' error message is displayed");
+            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(
+                driver,
+                ICreateNewAccountUI.EmailTextboxId,
+                ICreateNewAccountUI.RequireErrorMessage),
+                Is.True);
         }
 
         [
@@ -56,13 +54,17 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01: Enter invalid first name contains special chars = " + email);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, email, emailFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, email, ICreateNewAccountUI.EmailTextboxId);
 
-            ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, emailFieldId);
+            ReportLog.Info(testMethod + " - Step 01: Click to '" + ICreateNewAccountUI.CreateAccountButtonName + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.CreateAccountButtonName);
 
-            ReportLog.Info(testMethod + " - Step 02: Verify that '" + invalidEmailValidationErrorMessage + "' error message is displayed");
-            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, emailFieldId, invalidEmailValidationErrorMessage), Is.True);
+            ReportLog.Info(testMethod + " - Step 02: Verify that '" + ICreateNewAccountUI.InvalidEmailErrorMessage + "' error message is displayed");
+            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(
+                driver,
+                ICreateNewAccountUI.EmailTextboxId,
+                ICreateNewAccountUI.InvalidEmailErrorMessage),
+                Is.True);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿
 using EcommerceDemo.commons;
+using EcommerceDemo.element_indentifiers;
 using EcommerceDemo.extents;
 using EcommerceDemo.helpers;
 using EcommerceDemo.page_objects;
@@ -7,7 +8,6 @@ using EcommerceDemo.testcases.smokeTest_pre_condition;
 using EcommerceDemo.testdata;
 using NUnit.Framework;
 using OpenQA.Selenium;
-using System.Reflection;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
@@ -17,15 +17,6 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         private IWebDriver driver;
         private CreateNewAccountPage createNewAccountPage;
 
-        private const string passwordFieldId = "password";
-        private const string createAnAccountHeaderLinkText = "Create an Account";
-        private const string createAnAccountButtonTitle = "Create an Account";
-        private const string requireValidationErrorMessage = "This is a required field.";
-        private const string invalidLengthValidationErrorMessage = "Minimum length of this field must be equal or greater than 8 symbols. " +
-            "Leading and trailing spaces will be ignored.";
-        private const string minimumClassCharValidationErrorMessage = "Minimum of different classes of characters in password is 3. " +
-            "Classes of characters: Lower Case, Upper Case, Digits, Special Characters.";
-
         [SetUp]
         protected override void Setup()
         {
@@ -33,7 +24,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             driver = GetDriver();
 
             //pre_condition
-            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, createAnAccountHeaderLinkText);
+            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText);
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
         }
 
@@ -42,11 +33,15 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         {
             string? testMethod = MethodHelper.GetTestMethodName();
 
-            ReportLog.Info(testMethod + " - Step 01: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, passwordFieldId);
+            ReportLog.Info(testMethod + " - Step 01: Click to '" + ICreateNewAccountUI.CreateAccountButtonName + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.CreateAccountButtonName);
 
-            ReportLog.Info(testMethod + " - Step 02: Verify that '" + requireValidationErrorMessage + "' error message is displayed");
-            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, passwordFieldId, requireValidationErrorMessage), Is.True);
+            ReportLog.Info(testMethod + " - Step 02: Verify that '" + ICreateNewAccountUI.RequireErrorMessage + "' error message is displayed");
+            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(
+                driver,
+                ICreateNewAccountUI.PasswordTextboxId,
+                ICreateNewAccountUI.RequireErrorMessage),
+                Is.True);
         }
 
         [
@@ -59,13 +54,17 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01 Enter password = " + password);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, password, passwordFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, password, ICreateNewAccountUI.PasswordTextboxId);
 
-            ReportLog.Info(testMethod + " - Step 02: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, passwordFieldId);
+            ReportLog.Info(testMethod + " - Step 02: Click to '" + ICreateNewAccountUI.CreateAccountButtonName + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.CreateAccountButtonName);
 
-            ReportLog.Info(testMethod + " - Step 03: Verify that '" + invalidLengthValidationErrorMessage + "' error message is displayed");
-            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, passwordFieldId, invalidLengthValidationErrorMessage), Is.True);
+            ReportLog.Info(testMethod + " - Step 03: Verify that '" + ICreateNewAccountUI.MinLengthErrorMessage + "' error message is displayed");
+            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(
+                driver,
+                ICreateNewAccountUI.PasswordTextboxId,
+                ICreateNewAccountUI.MinLengthErrorMessage),
+                Is.True);
         }
 
 
@@ -79,13 +78,17 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             string? testMethod = MethodHelper.GetTestMethodName();
 
             ReportLog.Info(testMethod + " - Step 01 Enter password = " + password);
-            createNewAccountPage.EnterToDynamicTextboxById(driver, password, passwordFieldId);
+            createNewAccountPage.EnterToDynamicTextboxById(driver, password, ICreateNewAccountUI.PasswordTextboxId);
 
-            ReportLog.Info(testMethod + " - Step 02: Click to '" + createAnAccountButtonTitle + "' button");
-            createNewAccountPage.ClickToCreateAnAccountButton(driver, createAnAccountButtonTitle, passwordFieldId);
+            ReportLog.Info(testMethod + " - Step 02: Click to '" + ICreateNewAccountUI.PasswordTextboxId + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.PasswordTextboxId);
 
-            ReportLog.Info(testMethod + " - Step 03: Verify that '" + minimumClassCharValidationErrorMessage + "' error message is displayed");
-            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(driver, passwordFieldId, minimumClassCharValidationErrorMessage), Is.True);
+            ReportLog.Info(testMethod + " - Step 03: Verify that '" + ICreateNewAccountUI.ClassCharErrorMessage + "' error message is displayed");
+            Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(
+                driver,
+                ICreateNewAccountUI.PasswordTextboxId,
+                ICreateNewAccountUI.ClassCharErrorMessage),
+                Is.True);
         }
     }
 }

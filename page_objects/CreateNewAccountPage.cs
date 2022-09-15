@@ -1,4 +1,5 @@
 ﻿using EcommerceDemo.page_interfaces;
+using NUnit.Framework;
 using OpenQA.Selenium;
 
 namespace EcommerceDemo.page_objects
@@ -10,9 +11,10 @@ namespace EcommerceDemo.page_objects
         public CreateNewAccountPage(IWebDriver driver)
         {
             this.driver = driver;
+            WaitUntilPageIsFullyLoaded(driver);
         }
 
-        public void ClickToCreateAnAccountButton(IWebDriver driver, string buttonTitle, string fieldId)
+        public void ClickToCreateAccountButton(IWebDriver driver, string buttonTitle)
         {
             // because firefox will auto-generate tooltips when element has "title" attribute
             // so we must remove it before running test (if not, sometimes testcases will be failed
