@@ -1,0 +1,1 @@
+powershell.exe -executionpolicy bypass -file .\FuncGetGeckoDriver.ps1 -GeckoDriverOutputPath .\geckodriver.exe -GeckoDriverVersion 0.31.0

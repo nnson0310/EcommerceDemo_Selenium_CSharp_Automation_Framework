@@ -1,0 +1,1 @@
+powershell.exe -executionpolicy bypass -file .\FuncGetMsEdgeDriver.ps1 -MsEdgeDriverOutputPath .\msedgedriver.exe

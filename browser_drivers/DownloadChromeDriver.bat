@@ -1,0 +1,1 @@
+powershell.exe -executionpolicy bypass -file .\FuncGetChromeDriver.ps1 -ChromeDriverOutputPath .\chromedriver.exe
