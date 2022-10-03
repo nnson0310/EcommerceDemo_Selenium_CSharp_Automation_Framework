@@ -1,22 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <RunSettings>
 	<RunConfiguration>
-		<!-- 0 = As many processes as possible, limited by number of cores on machine, 1 = Sequential (1 process), 2-> Given number of processes up to limit by number of cores on machine-->
-		<!--<MaxCpuCount>0</MaxCpuCount> -->
+		<!-- 0 = As many processes as possible, limited by number of cores on machine, 
+		1 = Sequential (1 process), 2-> Given number of processes up to limit by number of cores on machine-->
+		<MaxCpuCount>0</MaxCpuCount>
 		<!-- Disables in-assembly parallel execution, applies to both MSTest and NUnit -->
-		<!--<DisableParallelization>true</DisableParallelization>-->
+		<DisableParallelization>false</DisableParallelization>
 		<SkipExecutionWhenNoTests>true</SkipExecutionWhenNoTests>
 	</RunConfiguration>
-	<TestRunParameters>
-		<Parameter name="url" value="https://google.com" />
-	</TestRunParameters>
 	<NUnit>
 		<TestOutputXml>TestResults</TestOutputXml>
-		<!-- Set number of workers to perform testcases parallel -->
-		<StopOnError>true</StopOnError>
-		<Verbosity>5</Verbosity>
+		<!-- Ignoring all remaining testcases if one of testcase is marked as fail. Use for quick debugging -->
+		<StopOnError>false</StopOnError>
+		<Verbosity>4</Verbosity>
 		<InternalTraceLevel>Off</InternalTraceLevel>
 		<!-- Set number of workers to perform testcases parallel -->
-		<!--<NumberOfTestWorkers>-1</NumberOfTestWorkers> -->
+		<NumberOfTestWorkers>3</NumberOfTestWorkers>
+		<SkipExecutionWhenNoTests>true</SkipExecutionWhenNoTests>
 	</NUnit>
 </RunSettings>

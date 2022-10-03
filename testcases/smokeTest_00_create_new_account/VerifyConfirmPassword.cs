@@ -2,6 +2,7 @@
 using EcommerceDemo.element_indentifiers;
 using EcommerceDemo.extents;
 using EcommerceDemo.helpers;
+using EcommerceDemo.page_interfaces;
 using EcommerceDemo.page_objects;
 using EcommerceDemo.testcases.smokeTest_pre_condition;
 using EcommerceDemo.testdata;
@@ -10,20 +11,27 @@ using OpenQA.Selenium;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
-    [TestFixture, Description("Verify password field of Create_New_Account page")]
+    [
+      TestFixture,
+      FixtureLifeCycle(LifeCycle.SingleInstance),
+      Parallelizable(ParallelScope.Fixtures),
+      Description("Verify password field of Create_New_Account page")
+    ]
     public class VerifyConfirmPassword : BaseTest
     {
         private IWebDriver driver;
+        private HomePage homePage;
         private CreateNewAccountPage createNewAccountPage;
 
         [SetUp]
-        protected override void Setup()
+        protected override void SetUp()
         {
-            base.Setup();
+            base.SetUp();
             driver = GetDriver();
 
+            homePage = PageInitManager.GetPageInitManager().GetHomePage(driver);
             //pre_condition
-            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText);
+            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText, homePage);
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
         }
 

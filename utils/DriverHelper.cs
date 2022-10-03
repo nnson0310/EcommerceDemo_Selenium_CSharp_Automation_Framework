@@ -1,5 +1,4 @@
-﻿
-using AventStack.ExtentReports;
+﻿using AventStack.ExtentReports;
 using EcommerceDemo.commons;
 using EcommerceDemo.env_factory;
 using EcommerceDemo.extents;
@@ -7,9 +6,7 @@ using EcommerceDemo.helpers;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace EcommerceDemo.utils
 {
@@ -17,20 +14,22 @@ namespace EcommerceDemo.utils
     {
         private IWebDriver? driver;
 
-        public static string? environmentName = MethodHelper.GetEnvironmentParams("env");
-        public static string? browser = MethodHelper.GetEnvironmentParams("browser");
-        public static string? browserVersion = MethodHelper.GetEnvironmentParams("browser_version");
-        public static string? ipAddress = MethodHelper.GetEnvironmentParams("ip_address");
-        public static string? port = MethodHelper.GetEnvironmentParams("port");
-        public static string? os = MethodHelper.GetEnvironmentParams("os");
-        public static string? osVersion = MethodHelper.GetEnvironmentParams("os_version");
+        public static string? Url = MethodHelper.GetEnvironmentParams("url");
+        public static string? EnvironmentName = MethodHelper.GetEnvironmentParams("env");
+        public static string? Browser = MethodHelper.GetEnvironmentParams("browser");
+        public static string? BrowserVersion = MethodHelper.GetEnvironmentParams("browser_version");
+        public static string? IpAddress = MethodHelper.GetEnvironmentParams("ip_address");
+        public static string? Port = MethodHelper.GetEnvironmentParams("port");
+        public static string? Os = MethodHelper.GetEnvironmentParams("os");
+        public static string? OsVersion = MethodHelper.GetEnvironmentParams("os_version");
+        public static string? Platform;
 
         public IWebDriver GetDriver()
         {
             try
             {
                 driver = InitDriver();
-                ReportLog.Pass("Init browser driver = " + driver.ToString() + " successfully.");
+                ReportLog.Pass("Init browser Driver = " + driver.ToString() + " successfully.");
             }
             catch (Exception e)
             {
@@ -45,12 +44,9 @@ namespace EcommerceDemo.utils
 
             // get browser info to attach to extent reports
             ICapabilities cap = ((WebDriver)driver).Capabilities;
-            if (environmentName == "cloud")
-            {
-                cap = ((RemoteWebDriver)driver).Capabilities;
-            }
-            browser = cap.GetCapability("browserName").ToString();
-            browserVersion = cap.GetCapability("browserVersion").ToString();
+            Browser = cap.GetCapability("browserName").ToString();
+            BrowserVersion = cap.GetCapability("browserVersion").ToString();
+            Platform = Environment.OSVersion.VersionString;
 
             return driver;
         }
@@ -58,19 +54,15 @@ namespace EcommerceDemo.utils
         private IWebDriver InitDriver()
         {
             // assign default value if null
-            browser ??= "firefox";
-            browserVersion ??= "latest";
-            environmentName ??= "local";
-            ipAddress ??= "localhost";
-            port ??= "4444";
-            os ??= "Windows";
-            osVersion ??= "10";
+            Browser ??= "msedge";
+            EnvironmentName ??= "local";
+            IpAddress ??= "localhost";
+            Port ??= "4444";
 
-            driver = environmentName.ToLower() switch
+            driver = EnvironmentName.ToLower() switch
             {
-                "local" => new LocalEnvFactory(browser).InitDriver(),
-                "grid" => new GridEnvFactory(browser, ipAddress, port).InitDriver(),
-                _ => new CloudEnvFactory(browser, browserVersion, os, osVersion).InitDriver(),
+                "local" => new LocalEnvFactory(Browser).InitDriver(),
+                _ => new GridEnvFactory(Browser, IpAddress, Port).InitDriver(),
             };
 
             driver.Manage().Window.Maximize();
@@ -120,63 +112,35 @@ namespace EcommerceDemo.utils
             }
         }
 
-        /// <summary>
-        /// Close browser and kill all process though cmd
-        /// Check os is "Windows" or "Mac" to run corresponding cli
-        /// </summary>
-        public void CloseBrowserAndKillProcess()
+        public void CloseBrowser()
+        {
+            if (driver is not null)
+            {
+                driver.Manage().Cookies.DeleteAllCookies();
+                driver.Quit();
+            }
+        }
+
+        public void KillAllDriverProcess()
         {
             string cmd = "";
             try
             {
-                string osName = Environment.OSVersion.ToString().ToLower();
                 string driverInstanceName = driver!.ToString()!.ToLower();
 
                 if (driverInstanceName.Contains("chrome"))
                 {
-                    if (osName.Contains("window"))
-                    {
-                        cmd = "taskkill /F /FI \"IMAGENAME eq chromedriver*\"";
-                    }
-                    else
-                    {
-                        cmd = "pkill chromedriver";
-                    }
+
+                    cmd = "taskkill /F /FI \"IMAGENAME eq chromedriver*\"";
                 }
                 else if (driverInstanceName.Contains("firefox"))
                 {
-                    if (osName.Contains("windows"))
-                    {
-                        cmd = "taskkill /F /FI \"IMAGENAME eq geckodriver*\"";
-                    }
-                    else
-                    {
-                        cmd = "pkill geckodriver";
-                    }
-                }
-                else if (driverInstanceName.Contains("edge"))
-                {
-                    if (osName.Contains("window"))
-                    {
-                        cmd = "taskkill /F /FI \"IMAGENAME eq msedgedriver*\"";
-                    }
-                    else
-                    {
-                        cmd = "pkill msedgedriver";
-                    }
-                }
-                else if (driverInstanceName.Contains("safari"))
-                {
-                    if (osName.Contains("mac"))
-                    {
-                        cmd = "pkill safaridriver";
-                    }
-                }
 
-                if (driver is not null)
+                    cmd = "taskkill /F /FI \"IMAGENAME eq geckodriver*\"";
+                }
+                else
                 {
-                    driver.Manage().Cookies.DeleteAllCookies();
-                    driver.Quit();
+                    cmd = "taskkill /F /FI \"IMAGENAME eq msedgedriver*\"";
                 }
             }
             catch (Exception e)
@@ -204,6 +168,5 @@ namespace EcommerceDemo.utils
                 }
             }
         }
-
     }
 }

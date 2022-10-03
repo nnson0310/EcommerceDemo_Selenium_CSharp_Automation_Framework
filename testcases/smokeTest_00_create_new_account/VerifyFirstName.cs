@@ -10,20 +10,27 @@ using OpenQA.Selenium;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
-    [TestFixture, Description("Verify that first_name field of Create_New_Account page")]
+    [
+         TestFixture,
+         FixtureLifeCycle(LifeCycle.SingleInstance),
+         Parallelizable(ParallelScope.Fixtures),
+         Description("Verify that first_name field of Create_New_Account page")
+    ]
     public class VerifyFirstName : BaseTest
     {
         private IWebDriver driver;
+        private HomePage homePage;
         private CreateNewAccountPage createNewAccountPage;
 
         [SetUp]
-        protected override void Setup()
+        protected override void SetUp()
         {
-            base.Setup();
+            base.SetUp();
             driver = GetDriver();
 
+            homePage = PageInitManager.GetPageInitManager().GetHomePage(driver);
             //pre_condition
-            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText);
+            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText, homePage);
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
         }
 
