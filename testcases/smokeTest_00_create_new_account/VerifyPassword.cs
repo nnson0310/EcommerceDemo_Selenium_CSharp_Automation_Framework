@@ -80,8 +80,8 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
             ReportLog.Info(testMethod + " - Step 01 Enter password = " + password);
             createNewAccountPage.EnterToDynamicTextboxById(driver, password, ICreateNewAccountUI.PasswordTextboxId);
 
-            ReportLog.Info(testMethod + " - Step 02: Click to '" + ICreateNewAccountUI.PasswordTextboxId + "' button");
-            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.PasswordTextboxId);
+            ReportLog.Info(testMethod + " - Step 02: Click to '" + ICreateNewAccountUI.CreateAccountButtonName + "' button");
+            createNewAccountPage.ClickToCreateAccountButton(driver, ICreateNewAccountUI.CreateAccountButtonName);
 
             ReportLog.Info(testMethod + " - Step 03: Verify that '" + ICreateNewAccountUI.ClassCharErrorMessage + "' error message is displayed");
             Assert.That(createNewAccountPage.IsValidationErrorMessageDisplayed(

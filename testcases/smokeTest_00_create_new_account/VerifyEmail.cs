@@ -64,7 +64,7 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
                 driver,
                 ICreateNewAccountUI.EmailTextboxId,
                 ICreateNewAccountUI.InvalidEmailErrorMessage),
-                Is.True);
+                Is.False);
         }
     }
 }

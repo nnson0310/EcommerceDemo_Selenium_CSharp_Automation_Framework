@@ -9,6 +9,7 @@ using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Remote;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace EcommerceDemo.utils
 {
