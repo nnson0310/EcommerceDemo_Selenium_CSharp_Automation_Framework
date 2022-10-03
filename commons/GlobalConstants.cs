@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace EcommerceDemo.commons
+﻿namespace EcommerceDemo.commons
 {
     public sealed class GlobalConstants
     {

@@ -1,5 +1,4 @@
 ﻿using EcommerceDemo.page_interfaces;
-using NUnit.Framework;
 using OpenQA.Selenium;
 
 namespace EcommerceDemo.page_objects
