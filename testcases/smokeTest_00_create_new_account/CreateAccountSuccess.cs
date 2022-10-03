@@ -11,11 +11,17 @@ using OpenQA.Selenium;
 
 namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
 {
-    [TestFixture, Description("Verify that user can create new account success")]
+    [
+       TestFixture,
+       FixtureLifeCycle(LifeCycle.SingleInstance),
+       Parallelizable(ParallelScope.Fixtures),
+       Description("Verify that user can create new account success")
+    ]
     public class CreateAccountSuccess : BaseTest
     {
         private IWebDriver driver;
         private CreateNewAccountPage createNewAccountPage;
+        private HomePage homePage;
         private CustomerAccountPage? customerAccountPage;
 
         private string firstName;
@@ -26,15 +32,15 @@ namespace EcommerceDemo.testcases.smokeTest_00_create_new_account
         private string password;
 
         [SetUp]
-        protected override void Setup()
+        protected override void SetUp()
         {
-            base.Setup();
+            base.SetUp();
             driver = GetDriver();
 
+            homePage = PageInitManager.GetPageInitManager().GetHomePage(driver);
             //pre_condition
-            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText);
+            CreateNewAccountTest.NavigateToCreateNewAccountPage(driver, ICommonUI.CreateAccountHeaderLinkText, homePage);
             createNewAccountPage = PageInitManager.GetPageInitManager().GetCreateNewAccountPage(driver);
-
 
             //test data
             firstName = DataFaker.GetRandomFirstName();

@@ -3,6 +3,6 @@
     public sealed class GlobalConstants
     {
         public const int longTimeout = 20;
-        public const int shortTimeout = 10;
+        public const int shortTimeout = 5;
     }
 }

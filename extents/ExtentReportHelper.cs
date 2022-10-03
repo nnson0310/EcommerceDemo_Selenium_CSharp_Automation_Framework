@@ -9,6 +9,7 @@ namespace EcommerceDemo.extents
     public class ExtentReportHelper
     {
         private static ExtentReports? extentReports;
+        private static int count = 0;
 
         public static ExtentReports InitExtentReports()
         {
@@ -40,12 +41,16 @@ namespace EcommerceDemo.extents
                 throw new ArgumentNullException("Instance of ExtentReports class can not be intialized.");
             }
 
-            //attach runtime information to extent report
-            extentReports.AddSystemInfo("browser", DriverHelper.browser);
-            extentReports.AddSystemInfo("browser_version", DriverHelper.browserVersion);
-            extentReports.AddSystemInfo("environment", DriverHelper.environmentName);
-            extentReports.AddSystemInfo("os", DriverHelper.os);
-            extentReports.AddSystemInfo("os version", DriverHelper.osVersion);
+            //attach environment information to extent_report (only attach once)
+            if (count == 0)
+            {
+                extentReports.AddSystemInfo("Environment:", DriverHelper.EnvironmentName);
+                extentReports.AddSystemInfo("Main App URL:", DriverHelper.Url);
+                extentReports.AddSystemInfo("Browser:", DriverHelper.Browser);
+                extentReports.AddSystemInfo("Browser Version:", DriverHelper.BrowserVersion);
+                extentReports.AddSystemInfo("Platform:", DriverHelper.Platform);
+            }
+            count++;
 
             return extentReports;
         }

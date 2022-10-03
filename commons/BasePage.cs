@@ -1,5 +1,5 @@
-﻿using EcommerceDemo.custom_exceptions;
-using EcommerceDemo.helpers;
+﻿using EcommerceDemo.helpers;
+using EcommerceDemo.custom_exceptions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
@@ -14,9 +14,9 @@ namespace EcommerceDemo.commons
 
         private IJavaScriptExecutor? jsExecutor;
 
-        private const int longTimeout = GlobalConstants.longTimeout;
+        private int longTimeout = GlobalConstants.longTimeout;
 
-        private const int shortTimeout = GlobalConstants.shortTimeout;
+        private int shortTimeout = GlobalConstants.shortTimeout;
 
         private void OverrideGlobalTimeout(IWebDriver driver, int seconds)
         {
@@ -41,29 +41,29 @@ namespace EcommerceDemo.commons
         {
             By? by;
 
-            if (locator.StartsWith("id=") || locator.StartsWith("ID=") || locator.StartsWith("Id="))
+            if (locator.ToLower().StartsWith("id="))
             {
                 by = By.Id(GetLocatorValue(locator));
             }
-            else if (locator.StartsWith("css=") || locator.StartsWith("CSS=") || locator.StartsWith("Css="))
+            else if (locator.ToLower().StartsWith("css="))
             {
                 by = By.CssSelector(GetLocatorValue(locator));
             }
-            else if (locator.StartsWith("class=") || locator.StartsWith("CLASS=") || locator.StartsWith("Class="))
+            else if (locator.ToLower().StartsWith("class="))
             {
                 by = By.ClassName(GetLocatorValue(locator));
             }
-            else if (locator.StartsWith("name=") || locator.StartsWith("NAME=") || locator.StartsWith("Name="))
+            else if (locator.ToLower().StartsWith("name="))
             {
                 by = By.Name(GetLocatorValue(locator));
             }
-            else if (locator.StartsWith("xpath=") || locator.StartsWith("XPATH=") || locator.StartsWith("Xpath="))
+            else if (locator.ToLower().StartsWith("xpath="))
             {
                 by = By.XPath(GetLocatorValue(locator));
             }
             else
             {
-                throw new LocatorInvalidException("Locator type is invalid");
+                throw new InvalidLocatorException(locator);
             }
             return by;
         }
@@ -93,7 +93,7 @@ namespace EcommerceDemo.commons
             driver.Navigate().Back();
         }
 
-        public void RefreshPage(IWebDriver driver)
+        protected void RefreshPage(IWebDriver driver)
         {
             driver.Navigate().Refresh();
         }
@@ -123,6 +123,18 @@ namespace EcommerceDemo.commons
         protected void CancelAlert(IWebDriver driver)
         {
             WaitForAlertPresent(driver).Dismiss();
+        }
+
+        protected bool IsActiveLink(IWebDriver driver, string link)
+        {
+            using var httpClient = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, link);
+            var response = httpClient.Send(request).StatusCode;
+            if ((int)response == 200)
+            {
+                return true;
+            }
+            return false;
         }
 
         protected void SendKeyToAlert(IWebDriver driver, string str)
@@ -253,19 +265,19 @@ namespace EcommerceDemo.commons
             input.SendKeys(Keys.Delete);
         }
 
-        public void PressEnterButton(IWebDriver driver)
+        protected void PressEnterButton(IWebDriver driver)
         {
             Actions actions = new(driver);
-            actions.SendKeys(Keys.Enter).Perform();
+            actions.SendKeys(Keys.Enter).Build().Perform();
         }
 
-        public void PressTabButton(WebDriver driver)
+        protected void PressTabButton(WebDriver driver)
         {
             Actions actions = new(driver);
-            actions.SendKeys(Keys.Tab).Perform();
+            actions.SendKeys(Keys.Tab).Build().Perform();
         }
 
-        public void PressSpaceButton(WebDriver driver)
+        protected void PressSpaceButton(WebDriver driver)
         {
             Actions actions = new(driver);
             actions.SendKeys(Keys.Space).Perform();
@@ -322,12 +334,12 @@ namespace EcommerceDemo.commons
 
         protected String GetAttributeValue(IWebDriver driver, string locator, string attributeName)
         {
-            return GetElement(driver, locator).GetAttribute(attributeName);
+            return GetElement(driver, locator).GetAttribute(attributeName).Trim();
         }
 
         protected String GetAttributeValue(IWebDriver driver, string locator, string attributeName, params string[] dynamicValues)
         {
-            return GetElement(driver, GetDynamicXpath(locator, dynamicValues)).GetAttribute(attributeName);
+            return GetElement(driver, GetDynamicXpath(locator, dynamicValues)).GetAttribute(attributeName).Trim();
         }
 
         protected string GetElementText(IWebDriver driver, string locator)
@@ -528,7 +540,7 @@ namespace EcommerceDemo.commons
             return (string)jsExecutor.ExecuteScript("return arguments[0].innerText", GetElement(driver, locator));
         }
 
-        protected void ScrollToBottomPage(IWebDriver driver)
+        protected void ScrollToBottomOfPage(IWebDriver driver)
         {
             jsExecutor = (IJavaScriptExecutor)driver;
             jsExecutor.ExecuteScript("window.scrollBy(0,document.body.scrollHeight)");
@@ -587,7 +599,7 @@ namespace EcommerceDemo.commons
             explicitWait.Until(new Func<IWebDriver, bool>(driver =>
             {
                 jsExecutor = (IJavaScriptExecutor)driver;
-                return jsExecutor.ExecuteScript("return document.readyState").Equals("complete");
+                return jsExecutor.ExecuteScript("return document.readyState").ToString()!.Equals("complete");
             }));
         }
 

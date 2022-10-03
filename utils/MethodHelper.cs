@@ -4,11 +4,11 @@ using System.Reflection;
 
 namespace EcommerceDemo.helpers
 {
-    sealed internal class MethodHelper
+    sealed public class MethodHelper
     {
         public static void SleepInSeconds(int seconds)
         {
-            Thread.Sleep(seconds);
+            Thread.Sleep(seconds * 1000);
         }
 
         public static string GetProjectRootDir()

@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
-using EcommerceDemo.helpers;
 using EcommerceDemo.utils;
 using EcommerceDemo.extents;
+using EcommerceDemo.helpers;
 
 namespace EcommerceDemo.commons
 {
@@ -12,20 +12,15 @@ namespace EcommerceDemo.commons
         private DriverHelper driverHelper;
         private readonly string? url = MethodHelper.GetEnvironmentParams("url");
 
-        protected IWebDriver GetDriver()
-        {
-            return driver;
-        }
-
         [OneTimeSetUp]
-        protected virtual void GlobalSetup()
-        {     
+        protected void GlobalSetup()
+        {
             ExtentTestManager.CreateParentTest(GetType().Name);
             driverHelper = new();
         }
 
         [SetUp]
-        protected virtual void Setup()
+        protected virtual void SetUp()
         {
             ExtentTestManager.CreateChildTest(TestContext.CurrentContext.Test.Name);
             driver = driverHelper.GetDriver();
@@ -36,7 +31,7 @@ namespace EcommerceDemo.commons
         protected void TearDown()
         {
             driverHelper.GenerateExtentReport();
-            driverHelper.CloseBrowserAndKillProcess();
+            driverHelper.CloseBrowser();
         }
 
         [OneTimeTearDown]
@@ -45,5 +40,10 @@ namespace EcommerceDemo.commons
             ExtentReportHelper.GetExtentReports().Flush();
         }
 
+        public IWebDriver GetDriver()
+        {
+            return driver;
+        }
     }
 }
+
